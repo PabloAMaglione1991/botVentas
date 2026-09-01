@@ -1,0 +1,22 @@
+# Environment and Secrets
+.env
+.env.local
+
+# Instagram Session (contains sensitive cookies)
+session.json
+
+# Local temp and output folders
+temp_stories/
+reels_output/
+*.log
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+
+# Large local media cache (downloaded dynamically from Google Drive in actions)
+Assets/

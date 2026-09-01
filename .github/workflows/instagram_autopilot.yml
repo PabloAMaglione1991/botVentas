@@ -1,0 +1,48 @@
+name: Instagram Sales Autopilot
+
+on:
+  schedule:
+    # Runs every 2 hours (0:00, 2:00, 4:00, 6:00, 8:00, 10:00, 12:00, 14:00, 16:00, 18:00, 20:00, 22:00 UTC)
+    - cron: '0 */2 * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub web interface
+
+jobs:
+  run-autopilot:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Autopilot Cycle
+        env:
+          IG_USERNAME: ${{ secrets.IG_USERNAME }}
+          IG_PASSWORD: ${{ secrets.IG_PASSWORD }}
+          IG_SESSION_B64: ${{ secrets.IG_SESSION_B64 }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GOOGLE_DRIVE_FOLDER_URL: ${{ secrets.GOOGLE_DRIVE_FOLDER_URL }}
+        run: |
+          python github_runner.py
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add posts.json responded_leads.json
+          git commit -m "chore(autopilot): update catalog status and leads database [skip ci]" || echo "No changes to commit"
+          git push
