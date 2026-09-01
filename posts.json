@@ -106,10 +106,10 @@
       "media_type": "photo",
       "category": "INFORMATIVAS FEED",
       "title": "Placa Ig Limpieza",
-      "caption": "📦 ¡LLEVATE TU PLACA IG LIMPIEZA EN CUOTAS!\n📍 Placa Ig Limpieza\n\nComprá fácil, rápido y sin trámites complicados.\n\n✔️ Solo con tu DNI + 1 Servicio\n✔️ Elegí pagar por DÍA, SEMANA o MES\n✔️ Entrega inmediata en 24 horas en tu domicilio\n✔️ Envíos gratis en Santa Fe Capital, Santo Tomé y alrededores\n\n🚚 Rutas programadas a Esperanza, Rafaela, Franck, San Carlos y más.\n\n💬 ¡Escribinos ahora al WhatsApp del enlace en la bio y consultá disponibilidad!\n\n#AhoraCuotas #VentasSantaFe #FinanciacionDNI #AhoraCuotas #SantaFe #VentaDirecta",
-      "status": "pending",
-      "published_at": null,
-      "media_id": null,
+      "caption": "¡Decile ADIÓS a la escoba y BIENVENIDO al futuro de la limpieza! 👋✨ Con el **Robot Aspirador Yelmo**, tu casa de Santa Fe va a brillar sin que muevas un dedo. 🤖 Dejá que haga el trabajo y disfrutá de tu tiempo. ¡La comodidad que siempre quisiste, ahora a tu alcance!\n\nEn **Ahora Cuotas** te lo hacemos SÚPER FÁCIL para que lo tengas hoy mismo:\n✅ Solo con tu **DNI + 1 Servicio**.\n✅ ¡Pagá como quieras! Tenemos **cuotas por día, semana o mes** hechas a tu medida. 💳\n✅ ¿Lo querés ya? ¡Te lo **entregamos en 24hs** en la puerta de tu casa! 🚚\n✅ Tu compra es **segura y confiable**, ¡quedate tranqui!\n\n¡No te quedes con la duda! 💬 Escribinos ahora mismo por WhatsApp (link en la bio 👇) y te asesoramos al toque para que tengas tu Yelmo Robot Aspirador. ¡Limpieza fácil, vida más feliz!\n\n#AhoraCuotas #RobotAspirador #Yelmo #LimpiezaInteligente #Hogar #SantaFe #CompráEnCuotas #DNI #EntregaEn24hs #FacilidadesDePago #VidaModerna #ChauEscoba",
+      "status": "published",
+      "published_at": "2026-09-01T22:24:14.300068",
+      "media_id": "3976883196859320380",
       "error_message": null
     },
     {
@@ -588,5 +588,6 @@
       "media_id": null,
       "error_message": null
     }
-  ]
+  ],
+  "last_format": "photo"
 }
