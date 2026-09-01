@@ -4,6 +4,7 @@
 
 # Instagram Session (contains sensitive cookies)
 session.json
+session_secret_for_github.txt
 
 # Local temp and output folders
 temp_stories/
