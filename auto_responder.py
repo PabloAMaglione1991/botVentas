@@ -59,8 +59,8 @@ def check_and_reply_interactions(cl=None):
 
     # 1. Check comments on recent posts
     try:
-        user_id = cl.user_id_from_username(cl.username)
-        medias = cl.user_medias(user_id, amount=10)
+        user_id = getattr(cl, 'user_id', None) or cl.account_info().pk
+        medias = cl.user_medias(int(user_id), amount=10)
         print(f"👀 Revisando comentarios en las últimas {len(medias)} publicaciones...")
 
         for m in medias:
