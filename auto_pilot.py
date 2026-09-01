@@ -86,7 +86,7 @@ def run_autopilot():
                 except Exception as e:
                     logging.error("⚠️ [STORY] Error publicando historia: %s", e)
 
-            # 4. Feed & Reel Post Publishing
+            # 4. Feed & Reel Post Publishing (Alternating Photo vs AI Reel)
             catalog = load_catalog()
             posts = catalog.get("posts", [])
             pending_posts = [p for p in posts if p["status"] == "pending"]
@@ -97,7 +97,27 @@ def run_autopilot():
                 continue
 
             target_post = pending_posts[0]
-            logging.info("📌 [FEED/REEL] Próximo a publicar: [%s] %s (%s)", target_post['id'], target_post['title'], target_post['filename'])
+            last_format = catalog.get("last_format", "reel")
+            next_format = "photo" if last_format == "reel" else "reel"
+
+            img_path = Path(target_post["absolute_path"])
+            if next_format == "reel" and target_post.get("media_type") == "photo" and img_path.exists():
+                logging.info("🎬 [MODO REEL IA] Generando video vertical 9:16 para [%s] %s...", target_post['id'], target_post['title'])
+                try:
+                    from ai_reel_generator import generate_reel_for_product
+                    video_path, script_data = generate_reel_for_product(
+                        image_path=img_path,
+                        product_title=target_post["title"],
+                        category=target_post.get("category", "")
+                    )
+                    target_post["media_type"] = "video"
+                    target_post["absolute_path"] = str(video_path.resolve())
+                    target_post["relative_path"] = str(video_path.relative_to(BASE_DIR))
+                    target_post["filename"] = video_path.name
+                except Exception as e:
+                    logging.error("⚠️ No se pudo generar Reel con IA: %s. Se publica como foto.", e)
+
+            logging.info("📌 [%s] Próximo a publicar: [%s] %s (%s)", target_post['media_type'].upper(), target_post['id'], target_post['title'], target_post['filename'])
 
             try:
                 res = publish_item(target_post, cl=cl, dry_run=False)
@@ -105,10 +125,11 @@ def run_autopilot():
                 target_post["published_at"] = res["timestamp"]
                 target_post["media_id"] = res["media_id"]
                 target_post["error_message"] = None
+                catalog["last_format"] = next_format
                 save_catalog(catalog)
-                logging.info("🎉 [FEED/REEL] Publicado exitosamente: [%s] ID: %s", target_post['id'], res['media_id'])
+                logging.info("🎉 [%s] Publicado exitosamente: [%s] ID: %s", target_post['media_type'].upper(), target_post['id'], res['media_id'])
             except Exception as e:
-                logging.error("❌ [FEED/REEL] Error al publicar [%s]: %s", target_post['id'], e)
+                logging.error("❌ [ERROR] Error al publicar [%s]: %s", target_post['id'], e)
                 target_post["status"] = "error"
                 target_post["error_message"] = str(e)
                 save_catalog(catalog)
